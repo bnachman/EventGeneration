@@ -100,7 +100,6 @@ void EventGenAnalysis::AnalyzeEvent(int ievt, Pythia8::Pythia* pythia8, Pythia8:
 
     // Particle loop -----------------------------------------------------------
     double quark_pT = -1;
-    //double quark_pT =  1000000000;
     int ndaughts = 0;
 
     while (quark_pT < 95){
@@ -119,7 +118,6 @@ void EventGenAnalysis::AnalyzeEvent(int ievt, Pythia8::Pythia* pythia8, Pythia8:
       }
       if (quark_pT < 95) pythia8->next();
     }
-    //std::cout << ndaughts << " " << quark_pT << std::endl;
 
     for (unsigned int ip=0; ip<pythia8->event.size(); ++ip){
       
@@ -145,10 +143,8 @@ void EventGenAnalysis::AnalyzeEvent(int ievt, Pythia8::Pythia* pythia8, Pythia8:
     fastjet::RangeDefinition range(4.0);
     double median_pt = csa.median_pt_per_unit_area(range);
 
-    //std::cout << HS.size() << std::endl;
     fastjet::ClusterSequence hs(HS, *m_jet_def);
     vector<fastjet::PseudoJet> myHSJets = fastjet::sorted_by_pt(hs.inclusive_jets(25.0));
-    //std::cout << myHSJets.size() << std::endl;
     if (myHSJets.size() < 2) return;
 
     //PUPPI; https://arxiv.org/pdf/1407.6013.pdf 
@@ -158,7 +154,6 @@ void EventGenAnalysis::AnalyzeEvent(int ievt, Pythia8::Pythia* pythia8, Pythia8:
     double pTcut = 0.1 + NPV * 0.007;
     
     for (unsigned int i=0; i<particlesForJets.size(); i++){
-      //if (i%100==0) std::cout << i << " " << particlesForJets.size() << std::endl;
       bool ischargedi = (fabs(particlesForJets[i].user_info<MyUserInfo>().charge()) > 0.1);
       int whichvertexi =particlesForJets[i].user_info<MyUserInfo>().ipileup();
       double alphai = 0.;
